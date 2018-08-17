@@ -1,47 +1,26 @@
 'use strict';
 (function () {
-    function Phone(brand, price, color, os) {
-        //Here we put interior of the constructing function.
-        this.brand = brand;
-        this.price = price;
-        this.color = color;
-        this.os = os;
-        //by using this, the 'brand' property of the object we create will assume the value of the brand argument
+    // tworzymy funkcje konstruujaca, ktora bedzie tworzyla nowe przyciski
+    function Button(text) {
+        //ustawiamy poczatkowa wartosc text w nowych obiektach i dodajmy możliwość tworzenia obiektu bez podania argumentu, wartosc domyslna to Hello
+        this.text = text || 'Hello'; 
     };
 
-    var textJoined = [];
+    //Dodajemy metodę create tworzącą przycisk na stronie
+    Button.prototype = {
+        create: function() {
+            var self = this;
+            this.$element = $('<button>');
+            this.$element.text(this.text); //ustawiamy text na przycisku
+            //metoda, która po kliknięciu w przycisk wyświetli tekst na ekranie komputera
+            this.$element.click(function() {
+                alert(self.text);
+            });
+            $('body').append(this.$element);
+        }
+    }
 
-    Phone.prototype.myString = function () {
-        var text = ['The phone brand is ', this.brand, ', color is ', this.color, ' and the price is ', this.price, ' EUR and the Operating System is ', this.os, '.'];
-        textJoined = text.join('');
-        return textJoined;
-    };
-    
-    Phone.prototype.printInfo = function () {
-        this.myString();
-        console.log(textJoined);
-    };
-
-    Phone.prototype.log = function () {
-        this.myString();
-        var output = document.getElementById('output');
-        output.innerHTML += textJoined + '<br>';
-    };
-
-    var SamsungGalaxyS6 = new Phone('Samsung', 280, 'black', 'Android Lollipop');
-    var iPhone6S = new Phone('Apple', 500, 'silver', 'iOS 9');
-    var OnePlusOne = new Phone('OPPO', 250, 'white', 'Android KitKat');
-    var XiaomiMi5 = new Phone('Xiaomi', 240, 'silver', 'Android Marshmallow');
-
-    SamsungGalaxyS6.printInfo();
-    iPhone6S.printInfo();
-    SamsungGalaxyS6.printInfo();
-    XiaomiMi5.printInfo();
-
-    SamsungGalaxyS6.log();
-    iPhone6S.log();
-    SamsungGalaxyS6.log();
-    XiaomiMi5.log();
-
+    var btn1 = new Button('Hello!');
+    btn1.create();
 
 })();
